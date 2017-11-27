@@ -1,7 +1,8 @@
-var express = require('express')
-var path = require('path')
-var favicon = require('serve-favicon')
-var bodyParser = require('body-parser')
+const express = require('express')
+const path = require('path')
+const favicon = require('serve-favicon')
+const expressHbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 var index = require('./routes/index')
 var users = require('./routes/users')
@@ -9,7 +10,8 @@ var users = require('./routes/users')
 var app = express()
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+// start the package with the expressHbs method.
+app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}))
 app.set('view engine', 'hbs')
 
 // uncomment after placing your favicon in /public
@@ -36,7 +38,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500)
-  res.render('error')
+  res.render('partials/error')
 })
 
 module.exports = app
